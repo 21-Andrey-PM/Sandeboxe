@@ -3,13 +3,13 @@
 
 ![image](https://user-images.githubusercontent.com/125145037/224363550-7c01ad22-434f-48e8-9159-a30a5ed9cbde.png)
 
-Нажмите на ссылку, которая начинается словами “Последний выпуск Python 3…” и попадете на страницу последней версии Python3.
+Для установки `python` нажмите на ссылку, которая начинается со слов “Последний выпуск Python3…” и вы попадете на страницу последней версии `Python3`.
 
-Внизу страницы версии ссылки на скачивание установщиков. Есть возможность скачать python под 64-битную и 32-битную Windows.
+Внизу страницы вы увидите ссылки на скачивание установщиков. Есть возможность скачать python под 64-битную и 32-битную Windows.
 
 ![image](https://user-images.githubusercontent.com/125145037/224364226-d05f6bd9-8104-438f-8eea-7cef43b167d8.png)
 
-Скачайте и запустите установщик Python 3, он называется “python-3.****.exe”
+Скачайте и запустите установщик Python3, он называется “python-3.****.exe”
 
 На первом экране обязательно отметьте пункт “Add python.exe to PATH” и нажмите “Install Now”
 
@@ -30,11 +30,11 @@
 
 ![image](https://user-images.githubusercontent.com/125145037/224366908-b5b0e783-5d0d-426d-b9bd-0a33e5c8e5de.png)
 
-Если выводит ошибку, то это означает, что вы вначале не нажали галочку на “Add python.exe to PATH”
+Если выводит ошибку, это означает, что вы не нажали галочку на “Add python.exe to PATH”
 
-Что бы это исправить рекомендую зайти на этот сайт(https://okdk.ru/kak-dobavit-python-v-peremennuju-windows-path/)
+Что бы это исправить, рекомендую зайти на сайт(https://okdk.ru/kak-dobavit-python-v-peremennuju-windows-path/)
 
-Там подробно представлены различные способы решения этой проблемы.
+На нем подробно представлены различные способы решения этой проблемы.
 
 ## Создание и активация виртуального окружения
 
@@ -46,12 +46,41 @@
 
 ![image](https://user-images.githubusercontent.com/125145037/224371241-b0ac93f0-8a93-433d-9b3a-23dd94b69658.png)
 
-В `Windows PowerShell` может вылезти ошибка “Невозможно загрузить файл … так как выполнение сценариев отключено в этой системе”.
+В `Windows PowerShell` может вылезти ошибка “Невозможно загрузить файл … , так как выполнение сценариев отключено в этой системе”.
 
 Если такое произошло, то следует выполнить следующие действия:
 
 - Запускаем терминал от админа.
 - Пишем и запускаем: `Set-ExecutionPolicy RemoteSigned`
 
-## Использование pre-commit
+## Установка и запуск pre-commit
+### Установка pre-commit
+Установите `pre-commit`, используя команду `pip install pre-commit` в командной строке.
 
+Создайте `.pre-commit-config.yaml` файл в корневой папке вашего проекта и добавьте к нему `pre-commit` конфигурацию.
+
+Вот пример базового `.pre-commit-config.yaml` файла:
+```
+repos:  
+ - repo: https://github.com/pre-commit/mirrors-mypy  
+    rev: v0.812  
+   hooks:   
+      - id: mypy    
+        args: [--ignore-missing-imports, --strict-optional]  
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks  
+    rev: v4.0.1  
+    hooks:  
+      - id: end-of-file-fixer  
+      - id: trailing-whitespace  
+      - id: check-yaml  
+```
+В этом примере мы используем два `pre-commit` репозитория с их указанными версиями. Хук `mypy` из репозитория `pre-commit/mirrors-mypy` проверит аннотации типов в коде, а хуки `end-of-file-fixer`, `trailing-whitespace` и `check-yaml` из репозитория `pre-commit/pre-commit-hooks` исправят конец файла, завершающий пробел и проверят YAML файлы соответственно.   
+
+### Запуск pre-commit
+
+Активируйте свою виртуальную среду, набрав команду `_имя окружения_\Scripts\activate`.
+
+Перейдите в корневой каталог вашего проекта, где находится `.pre-commit-config.yaml` файл.
+
+Введите команду `pre-commit run --all-files` и нажмите `enter` для запуска всех `pre-commit` хуков, указанных в файле конфигурации.
